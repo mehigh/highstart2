@@ -1,0 +1,13 @@
+/*
+ * This folder holds what one might call the boilerplate code for the project.
+ * In here, you will find the normalize file, some typographic rules, and
+ * some global sheets defining the standard styles for commonly used
+ * HTML elements
+ */
+
+@import '../vendors/normalize';
+@import 'global';
+@import 'typography';
+@import 'media';
+@import 'forms';
+@import 'utility-classes';

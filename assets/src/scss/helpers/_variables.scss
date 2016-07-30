@@ -1,0 +1,20 @@
+/* Breakpoints */
+$mobile-break: 600px; // small break upper limit
+$tablet-break: 1024px; // medium break upper limit
+
+/* Typography */
+$base-font: Arial, "Helvetica Neue", Helvetica, sans-serif;
+$alt-font: "Times New Roman", Times, Baskerville, Georgia, serif;
+$base-font-px-size: 14;
+$base-font-size: 14px;
+$base-line-height: 18px;
+
+/* Grid / Spacings */
+$image-spacing: 10px;
+
+/* Colors */
+$blue: #277f9c;
+$primary: #000;
+$primary-bg: #fff;
+$link-color: $blue;
+// $link-hover: darken( $link-color, 10% );

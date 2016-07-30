@@ -1,0 +1,42 @@
+{
+  "name": "highstart2",
+  "version": "0.0.1",
+  "main": "html/index.html",
+  "scripts": {
+    "build": "gulp build",
+    "watch": "gulp watch"
+  },
+  "keywords": [
+    "sass"
+  ],
+  "author": "Mike Crantea",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/mehigh/highstart2/issues"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.3.7",
+    "bower": "^1.7.9",
+    "del": "^2.2.1",
+    "glob-base": "^0.3.0",
+    "gulp": "gulpjs/gulp#4.0",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-flatten": "^0.3.0",
+    "gulp-hub": "^0.8.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^2.3.2",
+    "normalize-scss": "^5.0.3",
+    "postcss-scss": "^0.1.9"
+  },
+  "engine": "node >= 6",
+  "devDependencies": {
+    "gulp-livereload": "^3.8.1",
+    "gulp-postcss": "^6.1.1",
+    "gulp-watch": "^4.3.9",
+    "postcss-reporter": "^1.4.1",
+    "postcss-scss": "^0.1.9",
+    "stylefmt": "^4.2.1",
+    "stylelint": "^7.0.3",
+    "stylelint-config-standard": "^11.0.0"
+  }
+}

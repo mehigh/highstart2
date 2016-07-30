@@ -1,0 +1,19 @@
+%clearfix {
+	&:before,
+	&:after {
+		content: "";
+		display: table;
+		flex-basis: 0;
+		order: 1;
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+%no-wrap {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}

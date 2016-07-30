@@ -1,0 +1,38 @@
+/* Wordpress Standard Editor Classes */
+
+.aligncenter {
+	text-align: center;
+}
+
+.alignleft {
+	text-align: left;
+}
+
+.alignright {
+	text-align: right;
+}
+
+img {
+	&.aligncenter {
+		display: block;
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: $image-spacing;
+		margin-bottom: $image-spacing;
+	}
+
+	&.alignleft {
+		clear: left;
+		float: left;
+		margin-right: $image-spacing;
+		margin-bottom: $image-spacing;
+	}
+
+	&.alignright {
+		clear: right;
+		float: right;
+		margin-left: $image-spacing;
+		margin-bottom: $image-spacing;
+	}
+}

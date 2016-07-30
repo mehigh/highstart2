@@ -1,0 +1,102 @@
+body {
+	font-family: $base-font;
+	font-size: #{$base-font-px-size / 16}em;
+}
+
+/* Links */
+
+a {
+	text-decoration: none;
+	color: $link-color;
+
+	@include mq(large) {
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+/* Headings */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+}
+
+h1,
+.h1 {
+	font-size: em(32);
+}
+
+h2,
+.h2 {
+	font-size: em(29);
+}
+
+h3,
+.h3 {
+	font-size: em(26);
+}
+
+h4,
+.h4 {
+	font-size: em(23);
+}
+
+h5,
+.h5 {
+	font-size: em(20);
+}
+
+h6,
+.h6 {
+	font-size: em(17);
+}
+
+/* Content Text */
+
+p {
+}
+
+blockquote {
+	font-style: italic;
+}
+
+/* Lists */
+
+article {
+	ul,
+	ol {
+		margin-left: 1em;
+		margin-bottom: #{$base-font-size / 2};
+
+		ul,
+		ol {
+			margin-bottom: 0;
+			padding-top: #{$base-font-size / 4};
+			font-size: 1em;
+		}
+
+		li {
+			padding-top: #{$base-font-size / 4};
+			padding-bottom: #{$base-font-size / 4};
+		}
+	}
+
+	ul {
+		list-style-type: disc;
+	}
+
+	ol {
+		list-style-type: decimal;
+	}
+}
