@@ -1,0 +1,25 @@
+{
+  "name": "highstart2",
+  "description": "",
+  "main": "html/index.html",
+  "authors": [
+    "Mike Crantea"
+  ],
+  "license": "GPL-3.0",
+  "keywords": [
+    "sass"
+  ],
+  "homepage": "https://github.com/mehigh/highstart2",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize-scss": "^3.0.3",
+    "scss-query": "scss-mediaquery#^1.0.0"
+  }
+}

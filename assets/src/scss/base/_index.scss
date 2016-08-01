@@ -5,7 +5,7 @@
  * HTML elements
  */
 
-@import '../vendors/normalize';
+@import 'normalize.scss'; // Vendor normalize-scss.
 @import 'global';
 @import 'typography';
 @import 'media';

@@ -25,6 +25,10 @@ configuration.styles.inputFiles = configuration.styles.input + '**/*.scss';
 configuration.styles.outputFiles = configuration.styles.output + '**/*.css';
 configuration.scripts.inputFiles = configuration.scripts.input + '**/*.js';
 configuration.images.inputFiles = configuration.images.input + '**/*';
+/* Turns the vendor relative paths into absolute ones */
+for (var i = 0, length = configuration.styles.vendors.length; i < length; i++) {
+	configuration.styles.vendors[i] = __dirname + "/" + configuration.styles.vendors[i];
+}
 
 /****************************
  * STYLES
@@ -40,6 +44,7 @@ function compile_css() {
 	return gulp.src( configuration.styles.inputFiles)
 		.pipe( plumber() )
 		.pipe( sass( {
+			includePaths: configuration.styles.vendors,
 			outputStyle: 'expanded'
 		 } ).on( 'error', sass.logError ) )
 		.pipe( flatten() )

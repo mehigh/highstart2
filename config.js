@@ -6,6 +6,10 @@ module.exports = {
   	styles: {
   		input: 'assets/src/scss/',
   		output: 'assets/dist/css/',
+  		vendors: [
+  			'bower_components/normalize-scss',
+  			'bower_components/scss-query'
+			],
   		minification: true,
   		browserSupport: [ 'last 2 versions', '> 3%' ]
   	},
