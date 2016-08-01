@@ -4,6 +4,7 @@
 /*global require*/
 
 var gulp = require( 'gulp' );
+var configuration = require( './config' ).configuration;
 var plumber = require( 'gulp-plumber' );
 var del = require( 'del' );
 var flatten = require( 'gulp-flatten' );
@@ -16,19 +17,37 @@ var reporter = require( 'postcss-reporter' );
 var scss = require( 'postcss-scss' );
 var stylelint = require( 'stylelint' );
 var stylefmt = require( 'stylefmt' );
+var mqpacker = require( 'css-mqpacker' );
 /* IMAGES */
 var imagemin = require( 'gulp-imagemin' );
 var pngquant = require( 'imagemin-pngquant' );
-/* CONFIG */
-var configuration = require( './config' ).configuration;
+/* SCRIPTS */
+// TODO: JS modules imports here
+
+/* CONFIG STYLES */
 configuration.styles.inputFiles = configuration.styles.input + '**/*.scss';
 configuration.styles.outputFiles = configuration.styles.output + '**/*.css';
-configuration.scripts.inputFiles = configuration.scripts.input + '**/*.js';
-configuration.images.inputFiles = configuration.images.input + '**/*';
 /* Turns the vendor relative paths into absolute ones */
 for (var i = 0, length = configuration.styles.vendors.length; i < length; i++) {
 	configuration.styles.vendors[i] = __dirname + "/" + configuration.styles.vendors[i];
 }
+var styleAutoPrefixer = autoprefixer( {
+	browsers: configuration.styles.browserSupport,
+	cascade: true,
+	remove: true
+} );
+var styleMqPacker = mqpacker();
+if ( configuration.styles.minification ) { // minification handles mqPacking
+	configuration.styles.transforms = [ styleAutoPrefixer ];
+} else {
+	configuration.styles.transforms = [ styleAutoPrefixer, styleMqPacker ];
+}
+
+/* CONFIG IMAGES */
+configuration.images.inputFiles = configuration.images.input + '**/*';
+
+/* CONFIG SCRIPTS */
+configuration.scripts.inputFiles = configuration.scripts.input + '**/*.js';
 
 /****************************
  * STYLES
@@ -48,13 +67,7 @@ function compile_css() {
 			outputStyle: 'expanded'
 		 } ).on( 'error', sass.logError ) )
 		.pipe( flatten() )
-		.pipe( postcss( [
-			autoprefixer( {
-				browsers: configuration.styles.browserSupport,
-				cascade: true,
-				remove: true
-			 } )
-		] ) )
+		.pipe( postcss( configuration.styles.transforms ) )
 		.pipe( gulp.dest( configuration.styles.output ) );
 };
 
