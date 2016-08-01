@@ -23,8 +23,10 @@
     "gulp-clean-css": "^2.0.12",
     "gulp-flatten": "^0.3.0",
     "gulp-hub": "^0.8.0",
+    "gulp-imagemin": "^3.0.2",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.3.2",
+    "imagemin-pngquant": "^5.0.0",
     "normalize-scss": "^5.0.3",
     "postcss-scss": "^0.1.9"
   },
