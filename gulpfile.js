@@ -18,6 +18,7 @@ var scss = require( 'postcss-scss' );
 var stylelint = require( 'stylelint' );
 var stylefmt = require( 'stylefmt' );
 var mqpacker = require( 'css-mqpacker' );
+var sassdoc = require( 'sassdoc' );
 /* IMAGES */
 var imagemin = require( 'gulp-imagemin' );
 var pngquant = require( 'imagemin-pngquant' );
@@ -30,17 +31,6 @@ configuration.styles.outputFiles = configuration.styles.output + '**/*.css';
 /* Turns the vendor relative paths into absolute ones */
 for (var i = 0, length = configuration.styles.vendors.length; i < length; i++) {
 	configuration.styles.vendors[i] = __dirname + "/" + configuration.styles.vendors[i];
-}
-var styleAutoPrefixer = autoprefixer( {
-	browsers: configuration.styles.browserSupport,
-	cascade: true,
-	remove: true
-} );
-var styleMqPacker = mqpacker();
-if ( configuration.styles.minification ) { // minification handles mqPacking
-	configuration.styles.transforms = [ styleAutoPrefixer ];
-} else {
-	configuration.styles.transforms = [ styleAutoPrefixer, styleMqPacker ];
 }
 
 /* CONFIG IMAGES */
@@ -67,7 +57,14 @@ function compile_css() {
 			outputStyle: 'expanded'
 		 } ).on( 'error', sass.logError ) )
 		.pipe( flatten() )
-		.pipe( postcss( configuration.styles.transforms ) )
+		.pipe( postcss( [
+			autoprefixer( {
+				browsers: configuration.styles.browserSupport,
+				cascade: true,
+				remove: true
+			} ),
+			mqpacker()
+		] ) )
 		.pipe( gulp.dest( configuration.styles.output ) );
 };
 
@@ -86,6 +83,19 @@ function format_css() {
 			syntax: scss
 		} ) )
 		.pipe( gulp.dest( configuration.styles.input ) );
+}
+
+// Styles documentation
+function document_css( done ) {
+	if ( configuration.styles.documentation ) {
+		return gulp
+			.src( configuration.styles.inputFiles )
+			.pipe( sassdoc( {
+				dest: configuration.styles.documentation
+			} ) );
+	} else {
+		done();
+	}
 }
 
 // Styles minification
@@ -128,12 +138,24 @@ function watch() {
 
 gulp.task( 'build', gulp.series(
 	gulp.parallel(
-		gulp.series( clean_css, format_css, compile_css, minify_css ),
+		gulp.series(
+			clean_css,
+			format_css,
+			compile_css,
+			gulp.parallel(
+				minify_css,
+				document_css
+			)
+		),
 		compress_images
 	)
 ) );
 
-gulp.task( 'watch', gulp.series( clean_css, format_css, compile_css,
+gulp.task( 'watch', gulp.series(
+	clean_css,
+	format_css,
+	compile_css,
+	document_css,
 	gulp.parallel( watch )
 ) );
 

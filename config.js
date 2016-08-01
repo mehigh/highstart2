@@ -6,6 +6,7 @@ module.exports = {
   	styles: {
   		input: 'assets/src/scss/',
   		output: 'assets/dist/css/',
+  		documentation: 'documentation/styles',
   		vendors: [
   			'bower_components/normalize-scss',
   			'bower_components/scss-query'

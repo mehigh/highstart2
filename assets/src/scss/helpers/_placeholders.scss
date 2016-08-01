@@ -1,3 +1,33 @@
+// ----------------------------------------------------------------------
+
+// Clearfix
+
+// ----------------------------------------------------------------------
+
+////
+/// @author Mike Crantea
+/// @group helpers, placeholders
+////
+
+/// Clears contained floated elements.
+///
+/// @example scss - Basic Usage Sass
+///    .clearfix {
+///        @extend %clearfix;
+///    }
+///
+/// @example scss - Basic Usage CSS Output
+///    .clearfix:before,
+///    .clearfix:after {
+///        content: "";
+///        display: table;
+///        flex-basis: 0;
+///        order: 1;
+///    }
+///    .clearfix:after {
+///        clear: both;
+///    }
+
 %clearfix {
 	&:before,
 	&:after {
