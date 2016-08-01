@@ -8,8 +8,9 @@ body {
 a {
 	text-decoration: none;
 	color: $link-color;
+	font-weight: bold;
 
-	@include mq(large) {
+	@media (query(min, large)) {
 		&:hover {
 			text-decoration: underline;
 		}

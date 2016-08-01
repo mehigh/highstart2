@@ -1,6 +1,5 @@
 /* Breakpoints */
-$mobile-break: 600px; // small break upper limit
-$tablet-break: 1024px; // medium break upper limit
+$query-breakpoints: ( 'micro': 320px, 'small': 600px, 'medium': 768px, 'large': 960px, 'huge': 1440px );
 
 /* Typography */
 $base-font: Arial, "Helvetica Neue", Helvetica, sans-serif;
