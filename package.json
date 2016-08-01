@@ -23,24 +23,20 @@
     "gulp": "gulpjs/gulp#4.0",
     "gulp-clean-css": "^2.0.12",
     "gulp-flatten": "^0.3.0",
-    "gulp-hub": "^0.8.0",
     "gulp-imagemin": "^3.0.2",
     "gulp-plumber": "^1.1.0",
+    "gulp-postcss": "^6.1.1",
     "gulp-sass": "^2.3.2",
     "imagemin-pngquant": "^5.0.0",
-    "normalize-scss": "^5.0.3",
-    "postcss-scss": "^0.1.9",
-    "sassdoc": "^2.1.20"
-  },
-  "engine": "node >= 6",
-  "devDependencies": {
-    "gulp-livereload": "^3.8.1",
-    "gulp-postcss": "^6.1.1",
-    "gulp-watch": "^4.3.9",
     "postcss-reporter": "^1.4.1",
     "postcss-scss": "^0.1.9",
+    "sassdoc": "^2.1.20",
     "stylefmt": "^4.2.1",
     "stylelint": "^7.0.3",
     "stylelint-config-standard": "^11.0.0"
+  },
+  "engine": "node >= 6",
+  "devDependencies": {
+    "gulp-watch": "^4.3.9"
   }
 }
