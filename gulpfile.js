@@ -30,12 +30,12 @@ configuration.images.inputFiles = configuration.images.input + '**/*';
  * STYLES
 ****************************/
 
-// Remove existing content from CSS output folder
+// Erase previously compiled styles
 function clean_css() {
 	return del( [ configuration.styles.output ] );
 }
 
-// Compile SASS
+// Styles compiling
 function compile_css() {
 	return gulp.src( configuration.styles.inputFiles)
 		.pipe( plumber() )
@@ -53,9 +53,9 @@ function compile_css() {
 		.pipe( gulp.dest( configuration.styles.output ) );
 };
 
-// Format & Lint SASS code
+// Styles formatting & linting
 function format_css() {
-	return gulp.src( configuration.styles.inputFiles)
+	return gulp.src( configuration.styles.inputFiles )
 		.pipe( postcss( [
 			stylefmt()
 			], {
@@ -67,11 +67,11 @@ function format_css() {
 		], {
 			syntax: scss
 		} ) )
-		.pipe( gulp.dest( configuration.styles.inputFiles) );
+		.pipe( gulp.dest( configuration.styles.input ) );
 }
 
-// Minify CSS
-function minify_css(done) {
+// Styles minification
+function minify_css( done ) {
 	if ( configuration.styles.minification ) {
 		return gulp.src( configuration.styles.outputFiles )
 			.pipe(cleanCSS( { debug: true }, function( details ) {
@@ -90,7 +90,6 @@ function minify_css(done) {
 ****************************/
 
 function compress_images() {
-	console.log( configuration.images.inputFiles );
 	return gulp.src( configuration.images.inputFiles )
 		.pipe( imagemin( {
 			progressive: true,
@@ -104,7 +103,7 @@ function compress_images() {
 ****************************/
 
 function watch() {
-	gulp.watch( configuration.styles.input, compile_css );
+	gulp.watch( configuration.styles.inputFiles, compile_css );
 }
 
 /* MAIN TAKSS */
