@@ -4,6 +4,8 @@
     "block-no-empty": null,
     "block-opening-brace-space-before": "always-single-line",
     "indentation": "tab",
-    "selector-pseudo-element-colon-notation": "single"
+    "selector-pseudo-element-colon-notation": "single",
+    "media-feature-no-missing-punctuation": null,
+    "property-no-unknown": true
   }
 }
