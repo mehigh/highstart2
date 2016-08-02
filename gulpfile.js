@@ -161,7 +161,7 @@ function watch() {
 	gulp.watch( [ configuration.scripts.inputFiles ], compile_js );
 }
 
-/* MAIN TAKS */
+/* MAIN TASKS */
 
 gulp.task( 'build', gulp.series(
 	gulp.parallel(
