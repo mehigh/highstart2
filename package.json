@@ -4,7 +4,9 @@
   "main": "html/index.html",
   "scripts": {
     "build": "gulp build",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "start": "gulp watch",
+    "postinstall": "bower install"
   },
   "keywords": [
     "sass"
@@ -37,6 +39,10 @@
   },
   "engine": "node >= 6",
   "devDependencies": {
-    "gulp-watch": "^4.3.9"
+    "gulp-browserify": "^0.5.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-watch": "^4.3.9",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

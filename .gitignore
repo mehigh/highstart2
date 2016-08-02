@@ -39,3 +39,6 @@ bower_components
 
 # Temporary folders
 .tmp
+
+# IDE
+.idea/*

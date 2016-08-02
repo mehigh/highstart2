@@ -9,7 +9,7 @@ var plumber = require( 'gulp-plumber' );
 var del = require( 'del' );
 var flatten = require( 'gulp-flatten' );
 /* STYLES */
-var cleanCSS = require('gulp-clean-css');
+var cleanCSS = require( 'gulp-clean-css' );
 var sass = require( 'gulp-sass' );
 var postcss = require( 'gulp-postcss' );
 var autoprefixer = require( 'autoprefixer' );
@@ -23,14 +23,17 @@ var sassdoc = require( 'sassdoc' );
 var imagemin = require( 'gulp-imagemin' );
 var pngquant = require( 'imagemin-pngquant' );
 /* SCRIPTS */
-// TODO: JS modules imports here
+var browserify = require( 'browserify' );
+var source = require( 'vinyl-source-stream' );
+var buffer = require( 'vinyl-buffer' );
+var sourcemaps = require( 'gulp-sourcemaps' );
 
 /* CONFIG STYLES */
 configuration.styles.inputFiles = configuration.styles.input + '**/*.scss';
 configuration.styles.outputFiles = configuration.styles.output + '**/*.css';
 /* Turns the vendor relative paths into absolute ones */
-for (var i = 0, length = configuration.styles.vendors.length; i < length; i++) {
-	configuration.styles.vendors[i] = __dirname + "/" + configuration.styles.vendors[i];
+for ( var i = 0, length = configuration.styles.vendors.length; i < length; i++ ) {
+	configuration.styles.vendors[ i ] = __dirname + '/' + configuration.styles.vendors[ i ];
 }
 
 /* CONFIG IMAGES */
@@ -50,7 +53,7 @@ function clean_css() {
 
 // Styles compiling
 function compile_css() {
-	return gulp.src( configuration.styles.inputFiles)
+	return gulp.src( configuration.styles.inputFiles )
 		.pipe( plumber() )
 		.pipe( sass( {
 			includePaths: configuration.styles.vendors,
@@ -102,15 +105,38 @@ function document_css( done ) {
 function minify_css( done ) {
 	if ( configuration.styles.minification ) {
 		return gulp.src( configuration.styles.outputFiles )
-			.pipe(cleanCSS( { debug: true }, function( details ) {
-				var percentageSaved = ( ( 1.00 - details.stats.minifiedSize/details.stats.originalSize ) * 100).toFixed( 2 );
+			.pipe( cleanCSS( { debug: true }, function( details ) {
+				var percentageSaved = ( ( 1.00 - details.stats.minifiedSize/details.stats.originalSize ) * 100 ).toFixed( 2 );
 				var kilobytesSaved = ( ( details.stats.originalSize - details.stats.minifiedSize ) / 1024 ).toFixed( 2 );
 				console.log( details.name + ' : saved ' + percentageSaved + '% file size through minification (' + kilobytesSaved + ' KB)' );
-			}))
+			} ) )
 			.pipe( gulp.dest( configuration.styles.output ) );
 	} else {
 		done();
 	}
+}
+
+/****************************
+ * JAVASCRIPT
+ ****************************/
+function compile_js() {
+	var b = browserify( {
+		entries: configuration.scripts.input + configuration.scripts.entryPoint,
+		debug: true
+	} );
+
+	return b.bundle()
+		.pipe( source( configuration.scripts.entryPoint ) )
+		/** @todo: add sourcemaps / uglification support
+		 *
+			.pipe(buffer())
+			.pipe(sourcemaps.init({loadMaps: true}))
+			 Add transformation tasks to the pipeline here.
+			.pipe(uglify())
+			.on('error', gutil.log)
+			.pipe(sourcemaps.write('./'))
+		 */
+		.pipe( gulp.dest( configuration.scripts.output ) );
 }
 
 /****************************
@@ -121,7 +147,7 @@ function compress_images() {
 	return gulp.src( configuration.images.inputFiles )
 		.pipe( imagemin( {
 			progressive: true,
-			use: [pngquant()]
+			use: [ pngquant() ]
 		} ) )
 		.pipe( gulp.dest( configuration.images.output ) );
 }
@@ -131,10 +157,11 @@ function compress_images() {
 ****************************/
 
 function watch() {
-	gulp.watch( configuration.styles.inputFiles, compile_css );
+	gulp.watch( [ configuration.styles.inputFiles ], compile_css );
+	gulp.watch( [ configuration.scripts.inputFiles ], compile_js );
 }
 
-/* MAIN TAKSS */
+/* MAIN TAKS */
 
 gulp.task( 'build', gulp.series(
 	gulp.parallel(
@@ -142,6 +169,7 @@ gulp.task( 'build', gulp.series(
 			clean_css,
 			format_css,
 			compile_css,
+			compile_js,
 			gulp.parallel(
 				minify_css,
 				document_css
@@ -156,6 +184,7 @@ gulp.task( 'watch', gulp.series(
 	format_css,
 	compile_css,
 	document_css,
+	compile_js,
 	gulp.parallel( watch )
 ) );
 

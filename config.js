@@ -15,8 +15,8 @@ module.exports = {
   		browserSupport: [ 'last 2 versions', '> 3%' ]
   	},
   	scripts: {
-  		input: 'assets/src/js/',
-  		output: 'assets/dist/js/',
+  		input: './assets/src/js/',
+  		output: './assets/dist/js/',
   		minification: true,
   		entryPoint: 'main.js'
   	},
