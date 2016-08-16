@@ -152,7 +152,7 @@ function compile_js() {
 function lint_js() {
 	return gulp.src( configuration.scripts.inputFiles )
 		.pipe( jshint( '.jshintrc' ) )
-		.pipe( gulp.dest( configuration.scripts.input ) );
+		.pipe( gulp.dest( configuration.scripts.input ) )
 		.pipe( jshint.reporter( 'jshint-stylish' ) )
 		.pipe( notify( function ( file ) {
 			if ( file.jshint.success ) {
