@@ -4,7 +4,9 @@
   "main": "html/index.html",
   "scripts": {
     "build": "gulp build",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "start": "gulp watch",
+    "postinstall": "bower install"
   },
   "keywords": [
     "sass"
@@ -24,10 +26,15 @@
     "gulp-clean-css": "^2.0.12",
     "gulp-flatten": "^0.3.0",
     "gulp-imagemin": "^3.0.2",
+    "gulp-jscs": "^4.0.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-postcss": "^6.1.1",
     "gulp-sass": "^2.3.2",
     "imagemin-pngquant": "^5.0.0",
+    "jshint": "^2.9.2",
+    "jshint-stylish": "^2.2.1",
     "postcss-reporter": "^1.4.1",
     "postcss-scss": "^0.1.9",
     "sassdoc": "^2.1.20",
@@ -37,6 +44,10 @@
   },
   "engine": "node >= 6",
   "devDependencies": {
-    "gulp-watch": "^4.3.9"
+    "gulp-browserify": "^0.5.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-watch": "^4.3.9",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
