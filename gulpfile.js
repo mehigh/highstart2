@@ -29,6 +29,7 @@ var source = require( 'vinyl-source-stream' );
 var buffer = require( 'vinyl-buffer' );
 var sourcemaps = require( 'gulp-sourcemaps' );
 var jshint = require( 'gulp-jshint' );
+var jscs = require( 'gulp-jscs' );
 
 /* CONFIG STYLES */
 configuration.styles.inputFiles = configuration.styles.input + '**/*.scss';
@@ -181,6 +182,13 @@ function lint_js() {
 			}
 			return file.relative + " " + counts + " - " + errors;
 		} ) );
+}
+
+function todo_format_js() {
+	return gulp.src( configuration.scripts.inputFiles )
+		.pipe( jscs( { fix: true, configPath: '.jscsrc' } ) )
+		.pipe( jscs.reporter() )
+		.pipe( gulp.dest( configuration.scripts.input ) );
 }
 
 /****************************
