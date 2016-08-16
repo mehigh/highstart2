@@ -8,6 +8,7 @@ var configuration = require( './config' ).configuration;
 var plumber = require( 'gulp-plumber' );
 var del = require( 'del' );
 var flatten = require( 'gulp-flatten' );
+var notify = require("gulp-notify");
 /* STYLES */
 var cleanCSS = require( 'gulp-clean-css' );
 var sass = require( 'gulp-sass' );
@@ -27,6 +28,7 @@ var browserify = require( 'browserify' );
 var source = require( 'vinyl-source-stream' );
 var buffer = require( 'vinyl-buffer' );
 var sourcemaps = require( 'gulp-sourcemaps' );
+var jshint = require( 'gulp-jshint' );
 
 /* CONFIG STYLES */
 configuration.styles.inputFiles = configuration.styles.input + '**/*.scss';
@@ -119,6 +121,13 @@ function minify_css( done ) {
 /****************************
  * JAVASCRIPT
  ****************************/
+
+// Erase previously compiled styles
+function clean_js() {
+	return del( [ configuration.scripts.output ] );
+}
+
+// Scripts compiling
 function compile_js() {
 	var b = browserify( {
 		entries: configuration.scripts.input + configuration.scripts.entryPoint,
@@ -137,6 +146,41 @@ function compile_js() {
 			.pipe(sourcemaps.write('./'))
 		 */
 		.pipe( gulp.dest( configuration.scripts.output ) );
+}
+
+// Scripts linting
+function lint_js() {
+	return gulp.src( configuration.scripts.inputFiles )
+		.pipe( jshint( '.jshintrc' ) )
+		.pipe( gulp.dest( configuration.scripts.input ) );
+		.pipe( jshint.reporter( 'jshint-stylish' ) )
+		.pipe( notify( function ( file ) {
+			if ( file.jshint.success ) {
+				// Don't show something if success
+				return false;
+			}
+			var errorCount = 0;
+			var warningCount = 0;
+			var counts = '';
+			var errors = file.jshint.results.map(function (data) {
+				if (data.error) {
+					var isError = data.code && data.code[0] === 'E';
+					if (isError) {
+						errorCount++;
+					} else {
+						warningCount++;
+					}
+					return "(" + data.error.line + ':' + data.error.character + ') ' + data.error.reason;
+				}
+			}).join(" ");
+			if ( errorCount ) {
+				var counts = 'x' + errorCount;
+			}
+			if ( warningCount ) {
+				var counts = '!' + warningCount;
+			}
+			return file.relative + " " + counts + " - " + errors;
+		} ) );
 }
 
 /****************************
@@ -158,35 +202,37 @@ function compress_images() {
 
 function watch() {
 	gulp.watch( [ configuration.styles.inputFiles ], compile_css );
-	gulp.watch( [ configuration.scripts.inputFiles ], compile_js );
+	gulp.watch( [ configuration.scripts.inputFiles ], gulp.series( lint_js, compile_js ) );
 }
 
 /* MAIN TASKS */
 
-gulp.task( 'build', gulp.series(
+gulp.task( 'build',
 	gulp.parallel(
 		gulp.series(
 			clean_css,
 			format_css,
 			compile_css,
-			compile_js,
 			gulp.parallel(
 				minify_css,
 				document_css
 			)
 		),
+		gulp.series(
+			clean_js,
+			lint_js,
+			compile_js
+		),
 		compress_images
 	)
-) );
+);
 
-gulp.task( 'watch', gulp.series(
-	clean_css,
-	format_css,
-	compile_css,
-	document_css,
-	compile_js,
-	gulp.parallel( watch )
-) );
+gulp.task( 'watch',
+	gulp.series(
+		'build',
+		gulp.parallel( watch )
+	)
+);
 
 // Compile files for production ( default )
 gulp.task( 'default', gulp.series( 'build' ) );
