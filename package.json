@@ -6,6 +6,7 @@
     "build": "gulp build",
     "watch": "gulp watch",
     "start": "gulp watch",
+    "lint": "gulp lint",
     "postinstall": "bower install"
   },
   "keywords": [
@@ -24,7 +25,9 @@
     "glob-base": "^0.3.0",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-clean-css": "^2.0.12",
+    "gulp-eslint": "^3.0.1",
     "gulp-flatten": "^0.3.0",
+    "gulp-if": "^2.0.1",
     "gulp-imagemin": "^3.0.2",
     "gulp-jshint": "^2.0.1",
     "gulp-notify": "^2.2.0",
