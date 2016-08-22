@@ -1,19 +1,27 @@
 # HighStart2
-### Front-end Mobile-First Starter Kit
+## Front-end Mobile-First Starter Kit
 
-Powered by:
+### Powered by:
 
-* [Gulp 4](https://github.com/gulpjs/gulp/tree/4.0)
-* [Bower](https://bower.io/)
-* [PostCSS](http://postcss.org/)
-* [AutoPrefixer](https://github.com/postcss/autoprefixer)
-* [MqPacker](https://github.com/hail2u/node-css-mqpacker)
-* [StyleFmt](https://github.com/morishitter/stylefmt)
-* [CleanCSS](http://www.cleancss.com/)
-* [SassDoc](http://sassdoc.com/)
-* [Normalize](https://necolas.github.io/normalize.css/)
-* [SCSS-MediaQuery](https://github.com/nicolasmn/scss-mediaquery)
-* [ImageMin](https://github.com/imagemin/imagemin)
+* Task runner:
+	* [Gulp 4](https://github.com/gulpjs/gulp/tree/4.0)
+* Dependency manager:
+	* [Bower](https://bower.io/)
+* CSS:
+	* [AutoPrefixer](https://github.com/postcss/autoprefixer)
+	* [CleanCSS](http://www.cleancss.com/)
+	* [MqPacker](https://github.com/hail2u/node-css-mqpacker)
+	* [Normalize](https://necolas.github.io/normalize.css/)
+	* [PostCSS](http://postcss.org/)
+	* [SassDoc](http://sassdoc.com/)
+	* [SCSS-MediaQuery](https://github.com/nicolasmn/scss-mediaquery)
+	* [StyleFmt](https://github.com/morishitter/stylefmt)
+* JS:
+	* [Browserify](http://browserify.org/)
+	* [ESLint](http://eslint.org/)
+	* [JSHint](http://jshint.com/)
+* Images:
+	* [ImageMin](https://github.com/imagemin/imagemin)
 
 ### System requirements
 * Node v.6+
@@ -33,6 +41,9 @@ To enable automatic compiling of the SASS/JS files run:
 
 To compile the assets for production, which includes minification, if turned on in the config, run:
 `npm run build`
+
+To lint both the SASS & JS code run:
+`npm run lint`
 
 ### Sass Architecture
 
