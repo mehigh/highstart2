@@ -9,5 +9,4 @@
 	keyboardUtils.logTo( 'js-kblog' );
 	keyboardUtils.searchShortcut( 'js-search-input' );
 	keyboardUtils.toggleShortcut( 'js-ctrl-a', 'a' );
-
 }( window ) );

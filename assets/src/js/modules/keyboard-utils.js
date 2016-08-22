@@ -1,13 +1,12 @@
 'use strict';
 module.exports = ( function () {
 	return {
-		logTo: function( selector ) {
-
+		logTo: function ( selector ) {
 			var loggingElm = document.getElementById( selector ),
 				logKey,
 				countNewLines;
 
-			countNewLines = function( text ) {
+			countNewLines = function ( text ) {
 				var lines = text.split( '\n' ).length;
 				if ( lines ) {
 					return lines;
@@ -16,7 +15,7 @@ module.exports = ( function () {
 				}
 			};
 
-			logKey = function(event) {
+			logKey = function ( event ) {
 				var keyText = event.key,
 					writtenText = loggingElm.innerText;
 				writtenText += keyText + '\n';
@@ -29,13 +28,12 @@ module.exports = ( function () {
 			document.addEventListener( 'keydown', logKey );
 		},
 
-		searchShortcut: function( selector ) {
-
+		searchShortcut: function ( selector ) {
 			var searchInput = document.getElementById( selector ),
 				label = searchInput.previousElementSibling,
 				focusSearch;
 
-			focusSearch = function( pressed ) {
+			focusSearch = function ( pressed ) {
 				if ( pressed.ctrlKey && 'f' === pressed.key ) {
 					searchInput.focus();
 					searchInput.select();
@@ -46,42 +44,36 @@ module.exports = ( function () {
 				label.setAttribute( 'title', 'AccessKey: CTRL+F' );
 			}
 			document.addEventListener( 'keyup', focusSearch );
-
 		},
 
-		toggleShortcut: function( selector, character ) {
-
+		toggleShortcut: function ( selector, character ) {
 			var toggledElement = document.getElementById( selector ),
 				toggleElement,
 				toggledElementClass,
 				toggledElementClassActivePos;
 
-			toggledElementClass = toggledElement.getAttribute('class');
+			toggledElementClass = toggledElement.getAttribute( 'class' );
 
 			if ( null === toggledElementClass ) {
 				toggledElement.setAttribute( 'class', '' );
 			}
 
-			toggleElement = function( pressed ) {
-
+			toggleElement = function ( pressed ) {
 				if ( pressed.ctrlKey && character === pressed.key ) {
-
 					pressed.preventDefault();
 
-					toggledElementClass = toggledElement.getAttribute('class');
+					toggledElementClass = toggledElement.getAttribute( 'class' );
 					toggledElementClassActivePos = toggledElementClass.indexOf( 'active' );
 
 					if ( toggledElementClassActivePos !== -1 ) { // remove 'active' class
-						toggledElementClass = toggledElementClass.substr(0, toggledElementClassActivePos) +
+						toggledElementClass = toggledElementClass.substr( 0, toggledElementClassActivePos ) +
 							toggledElementClass.substr( toggledElementClassActivePos + 'active'.length );
 					} else { // add 'active' class
 						toggledElementClass += ' active ';
 					}
 
 					toggledElement.setAttribute( 'class', toggledElementClass );
-
 				}
-
 			};
 
 			document.addEventListener( 'keyup', toggleElement );

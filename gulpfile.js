@@ -29,6 +29,8 @@ var source = require( 'vinyl-source-stream' );
 var buffer = require( 'vinyl-buffer' );
 var sourcemaps = require( 'gulp-sourcemaps' );
 var jshint = require( 'gulp-jshint' );
+var gulpIf = require('gulp-if');
+var eslint = require( 'gulp-eslint' );
 
 /* CONFIG STYLES */
 configuration.styles.inputFiles = configuration.styles.input + '**/*.scss';
@@ -135,6 +137,11 @@ function compile_js() {
 	} );
 
 	return b.bundle()
+		.on( 'error', function( err ) {
+			console.log( err.stack );
+			notify( { message: err.message } );
+			this.emit( 'end' );
+		})
 		.pipe( source( configuration.scripts.entryPoint ) )
 		/** @todo: add sourcemaps / uglification support
 		 *
@@ -148,11 +155,10 @@ function compile_js() {
 		.pipe( gulp.dest( configuration.scripts.output ) );
 }
 
-// Scripts linting
-function lint_js() {
+// Scripts jsHint
+function hint_js() {
 	return gulp.src( configuration.scripts.inputFiles )
 		.pipe( jshint( '.jshintrc' ) )
-		.pipe( gulp.dest( configuration.scripts.input ) )
 		.pipe( jshint.reporter( 'jshint-stylish' ) )
 		.pipe( notify( function ( file ) {
 			if ( file.jshint.success ) {
@@ -183,6 +189,21 @@ function lint_js() {
 		} ) );
 }
 
+// Scripts esLint (+ autofix)
+function isEsLintFixed(file) {
+	// Has ESLint fixed the file contents?
+	return file.eslint != null && file.eslint.fixed;
+}
+
+function lint_js() {
+	return gulp.src( configuration.scripts.inputFiles )
+		.pipe( eslint( {
+			fix: true
+		} ) )
+		.pipe( eslint.format() )
+		.pipe( gulpIf( isEsLintFixed, gulp.dest( configuration.scripts.input ) ) );
+}
+
 /****************************
  * IMAGES
 ****************************/
@@ -202,7 +223,7 @@ function compress_images() {
 
 function watch() {
 	gulp.watch( [ configuration.styles.inputFiles ], compile_css );
-	gulp.watch( [ configuration.scripts.inputFiles ], gulp.series( lint_js, compile_js ) );
+	gulp.watch( [ configuration.scripts.inputFiles ], gulp.series( lint_js, hint_js, compile_js ) );
 }
 
 /* MAIN TASKS */
@@ -221,6 +242,7 @@ gulp.task( 'build',
 		gulp.series(
 			clean_js,
 			lint_js,
+			hint_js,
 			compile_js
 		),
 		compress_images
@@ -231,6 +253,14 @@ gulp.task( 'watch',
 	gulp.series(
 		'build',
 		gulp.parallel( watch )
+	)
+);
+
+gulp.task( 'lint',
+	gulp.parallel(
+		format_css,
+		lint_js,
+		hint_js
 	)
 );
 
