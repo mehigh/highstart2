@@ -24,6 +24,7 @@
     "del": "^2.2.1",
     "glob-base": "^0.3.0",
     "gulp": "gulpjs/gulp#4.0",
+    "gulp-browserify": "^0.5.1",
     "gulp-clean-css": "^2.0.12",
     "gulp-eslint": "^3.0.1",
     "gulp-flatten": "^0.3.0",
@@ -42,14 +43,13 @@
     "sassdoc": "^2.1.20",
     "stylefmt": "^4.2.1",
     "stylelint": "^7.0.3",
-    "stylelint-config-standard": "^11.0.0"
+    "stylelint-config-standard": "^11.0.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "engine": "node >= 6",
   "devDependencies": {
-    "gulp-browserify": "^0.5.1",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-watch": "^4.3.9",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "gulp-watch": "^4.3.9"
   }
 }

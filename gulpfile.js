@@ -4,33 +4,34 @@
 /*global require*/
 
 var gulp = require( 'gulp' );
+/* UTILS */
 var configuration = require( './config' ).configuration;
-var plumber = require( 'gulp-plumber' );
 var del = require( 'del' );
-var flatten = require( 'gulp-flatten' );
 var notify = require("gulp-notify");
 /* STYLES */
-var cleanCSS = require( 'gulp-clean-css' );
-var sass = require( 'gulp-sass' );
-var postcss = require( 'gulp-postcss' );
 var autoprefixer = require( 'autoprefixer' );
+var cleanCSS = require( 'gulp-clean-css' );
+var flatten = require( 'gulp-flatten' );
+var mqpacker = require( 'css-mqpacker' );
+var plumber = require( 'gulp-plumber' );
+var postcss = require( 'gulp-postcss' );
 var reporter = require( 'postcss-reporter' );
+var sass = require( 'gulp-sass' );
+var sassdoc = require( 'sassdoc' );
 var scss = require( 'postcss-scss' );
 var stylelint = require( 'stylelint' );
 var stylefmt = require( 'stylefmt' );
-var mqpacker = require( 'css-mqpacker' );
-var sassdoc = require( 'sassdoc' );
 /* IMAGES */
 var imagemin = require( 'gulp-imagemin' );
 var pngquant = require( 'imagemin-pngquant' );
 /* SCRIPTS */
 var browserify = require( 'browserify' );
-var source = require( 'vinyl-source-stream' );
 var buffer = require( 'vinyl-buffer' );
-var sourcemaps = require( 'gulp-sourcemaps' );
-var jshint = require( 'gulp-jshint' );
-var gulpIf = require('gulp-if');
 var eslint = require( 'gulp-eslint' );
+var gulpIf = require('gulp-if');
+var jshint = require( 'gulp-jshint' );
+var source = require( 'vinyl-source-stream' );
+var sourcemaps = require( 'gulp-sourcemaps' );
 
 /* CONFIG STYLES */
 configuration.styles.inputFiles = configuration.styles.input + '**/*.scss';
