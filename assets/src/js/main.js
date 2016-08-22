@@ -1,7 +1,6 @@
-( function( global ) {
-	'use strict';
-
+'use strict';
+( function ( global ) {
 	var fooConsoleLogger = require( './modules/foo-console-logger.js' );
-	fooConsoleLogger.helloWorld( global );
 
-} )( window );
+	fooConsoleLogger.helloWorld( global );
+}( window ) );
