@@ -2,24 +2,26 @@
 module.exports = ( function () {
 	return {
 		logTo: function ( selector ) {
-			var loggingElm = document.getElementById( selector ),
-				logKey,
-				countNewLines;
+			var countNewLines,
+				loggingElm = document.getElementById( selector ),
+				logKey;
 
 			countNewLines = function ( text ) {
 				var lines = text.split( '\n' ).length;
+
 				if ( lines ) {
 					return lines;
-				} else {
-					return 0;
 				}
+				return 0;
 			};
 
 			logKey = function ( event ) {
 				var keyText = event.key,
 					writtenText = loggingElm.innerText;
+
 				writtenText += keyText + '\n';
-				if ( countNewLines( writtenText ) > 19 ) { // limit history to 20 lines
+				if ( 19 < countNewLines( writtenText ) ) {
+					// limit history to 20 lines
 					writtenText = writtenText.substr( writtenText.indexOf( '\n' ) + 1 );
 				}
 				loggingElm.innerText = writtenText;
@@ -29,10 +31,11 @@ module.exports = ( function () {
 		},
 
 		searchShortcut: function ( selector ) {
-			var searchInput = document.getElementById( selector ),
-				label = searchInput.previousElementSibling,
-				focusSearch;
+			var focusSearch,
+				label,
+				searchInput = document.getElementById( selector );
 
+			label = searchInput.previousElementSibling;
 			focusSearch = function ( pressed ) {
 				if ( pressed.ctrlKey && 'f' === pressed.key ) {
 					searchInput.focus();
@@ -48,9 +51,9 @@ module.exports = ( function () {
 
 		toggleShortcut: function ( selector, character ) {
 			var toggledElement = document.getElementById( selector ),
-				toggleElement,
 				toggledElementClass,
-				toggledElementClassActivePos;
+				toggledElementClassActivePos,
+				toggleElement;
 
 			toggledElementClass = toggledElement.getAttribute( 'class' );
 
@@ -65,10 +68,14 @@ module.exports = ( function () {
 					toggledElementClass = toggledElement.getAttribute( 'class' );
 					toggledElementClassActivePos = toggledElementClass.indexOf( 'active' );
 
-					if ( toggledElementClassActivePos !== -1 ) { // remove 'active' class
-						toggledElementClass = toggledElementClass.substr( 0, toggledElementClassActivePos ) +
-							toggledElementClass.substr( toggledElementClassActivePos + 'active'.length );
-					} else { // add 'active' class
+					if ( -1 !== toggledElementClassActivePos ) {
+						// Remove 'active' class.
+						toggledElementClass = toggledElementClass.substr( 0,
+							toggledElementClassActivePos ) +
+						toggledElementClass.substr( toggledElementClassActivePos +
+								'active'.length );
+					} else {
+						// Add 'active' class.
 						toggledElementClass += ' active ';
 					}
 

@@ -1,8 +1,8 @@
 'use strict';
 
 ( function ( global ) {
-	var fooConsoleLogger = require( './modules/foo-console-logger.js' );
-	var keyboardUtils = require( './modules/keyboard-utils.js' );
+	var fooConsoleLogger = require( './modules/foo-console-logger.js' ),
+		keyboardUtils = require( './modules/keyboard-utils.js' );
 
 	fooConsoleLogger.helloWorld( global );
 
