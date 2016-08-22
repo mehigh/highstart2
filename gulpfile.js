@@ -137,6 +137,11 @@ function compile_js() {
 	} );
 
 	return b.bundle()
+		.on( 'error', function( err ) {
+			console.log( err.stack );
+			notify( { message: err.message } );
+			this.emit( 'end' );
+		})
 		.pipe( source( configuration.scripts.entryPoint ) )
 		/** @todo: add sourcemaps / uglification support
 		 *
