@@ -1,0 +1,23 @@
+.keyboard-shortcuts {
+	#js-kblog {
+		overflow: auto;
+		height: 19.8em;
+		line-height: 1.1em;
+	}
+
+	#js-ctrl-a {
+		.state-active {
+			display: none;
+		}
+
+		&.active {
+			.state-active {
+				display: inline;
+			}
+
+			.state-inactive {
+				display: none;
+			}
+		}
+	}
+}
