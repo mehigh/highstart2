@@ -1,5 +1,5 @@
 'use strict';
-( function ( global ) {
+( function( global ) {
 	var fooConsoleLogger = require( './modules/foo-console-logger.js' );
 
 	fooConsoleLogger.helloWorld( global );
